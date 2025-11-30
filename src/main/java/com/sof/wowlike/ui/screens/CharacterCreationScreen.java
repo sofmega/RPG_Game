@@ -19,12 +19,16 @@ public class CharacterCreationScreen {
     private final Label title = new Label("Create Your Character");
     private final TextField nameField = new TextField();
     private final Label resultLabel = new Label("");
+    private Runnable onCharacterCreated;
 
     public CharacterCreationScreen(GameApplication gameApp) {
         this.gameApp = gameApp;
 
         setupLayout();
         setupButtons();
+    }
+    public void setOnCharacterCreated(Runnable r) {
+        this.onCharacterCreated = r;
     }
 
     private void setupLayout() {
@@ -68,6 +72,9 @@ public class CharacterCreationScreen {
                 " (" + player.getCharacterClass() + ")\n" +
                 "Stats -> " + player.getStats()
         );
+        if (onCharacterCreated != null) {
+            onCharacterCreated.run();
+        }
     }
 
     public Parent getRoot() {

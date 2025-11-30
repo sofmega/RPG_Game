@@ -3,7 +3,8 @@ package com.sof.wowlike.app;
 import com.sof.wowlike.domain.character.CharacterClass;
 import com.sof.wowlike.domain.character.Stats;
 import com.sof.wowlike.domain.character.PlayerCharacter;
-
+import com.sof.wowlike.domain.npc.Enemy;
+import com.sof.wowlike.domain.npc.Goblin;
 
 public class GameApplication {
 
@@ -36,4 +37,7 @@ public class GameApplication {
         currentPlayer = null;
         nextId = 1;
     }
+    public Enemy spawnGoblin () {
+      return new Goblin(nextId++);
+    };
 }
