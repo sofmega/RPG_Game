@@ -32,6 +32,8 @@ jobs:
             --dest dist `
             --win-menu `
             --win-shortcut `
+            --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base `
+            --module-path "$env:JAVA_HOME\jmods"
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
