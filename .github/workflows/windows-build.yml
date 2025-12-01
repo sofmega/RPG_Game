@@ -22,12 +22,16 @@ jobs:
         run: mvn -B clean package
 
       - name: Download JavaFX SDK
+        shell: pwsh
         run: |
-          curl -L -o javafx.zip https://repo.maven.apache.org/maven2/org/openjfx/javafx-sdk/21.0.9/javafx-sdk-21.0.9-windows.zip
+          Invoke-WebRequest `
+            -Uri "https://download2.gluonhq.com/openjfx/21.0.9/windows/javafx-sdk-21.0.9.zip" `
+            -OutFile "javafx.zip"
           Expand-Archive -LiteralPath javafx.zip -DestinationPath .
           echo "JavaFX extracted"
 
       - name: Create Windows EXE with jpackage
+        shell: pwsh
         run: |
           $javafxPath = "javafx-sdk-21.0.9\lib"
           jpackage `
