@@ -21,19 +21,20 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package
 
-      - name: Download JavaFX SDK (BellSoft mirror)
+      - name: Download ZuluFX JavaFX SDK
         shell: pwsh
         run: |
           Invoke-WebRequest `
-            -Uri "https://download.bell-sw.com/javafx/21.0.1.1/bellsoft-javafx-sdk-21.0.1.1-windows-amd64.zip" `
-            -OutFile "javafx.zip"
-          Expand-Archive -LiteralPath javafx.zip -DestinationPath .
-          echo "JavaFX extracted"
+            -Uri "https://cdn.azul.com/zulu/bin/zulu21.30.15-ca-fx-jdk21.0.1-win_x64.zip" `
+            -OutFile "zulu.zip"
+          Expand-Archive -LiteralPath zulu.zip -DestinationPath .
+          echo "ZuluFX extracted"
 
       - name: Create Windows EXE with jpackage
         shell: pwsh
         run: |
-          $javafxPath = "bellsoft-javafx-sdk-21.0.1.1\lib"
+          $jdkPath = (Get-ChildItem -Directory zulu*).FullName
+          $modulePath = "$jdkPath\jmods"
           jpackage `
             --type exe `
             --name RPG_Game `
@@ -43,7 +44,7 @@ jobs:
             --dest dist `
             --win-menu `
             --win-shortcut `
-            --module-path "$javafxPath" `
+            --module-path "$modulePath" `
             --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base
 
       - name: Upload EXE artifact
