@@ -27,6 +27,7 @@ jobs:
           Invoke-WebRequest `
             -Uri "https://cdn.azul.com/zulu/bin/zulu21.30.15-ca-fx-jdk21.0.1-win_x64.zip" `
             -OutFile "zulu.zip"
+          
           Expand-Archive -LiteralPath zulu.zip -DestinationPath .
           echo "ZuluFX extracted"
 
@@ -34,7 +35,8 @@ jobs:
         shell: pwsh
         run: |
           $jdkPath = (Get-ChildItem -Directory zulu*).FullName
-          $modulePath = "$jdkPath\jmods"
+          $modulePath = "$jdkPath\jmods;$jdkPath\javafx-jmods"
+
           jpackage `
             --type exe `
             --name RPG_Game `
